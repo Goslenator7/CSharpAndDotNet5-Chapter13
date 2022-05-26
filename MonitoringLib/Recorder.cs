@@ -16,6 +16,7 @@ namespace Packt.Shared
         {
             // force 2 garbage collections to release memory that is no longer references
             // but is not released yet
+            // DO NOT use in an application
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
