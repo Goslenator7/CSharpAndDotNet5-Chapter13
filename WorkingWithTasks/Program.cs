@@ -32,10 +32,17 @@ namespace WorkingWithTasks
         static void Main(string[] args)
         {
             var timer = Stopwatch.StartNew();
-            WriteLine("Running methods synchronously on one thread.");
-            MethodA();
-            MethodB();
-            MethodC();
+            //WriteLine("Running methods synchronously on one thread.");
+            //MethodA();
+            //MethodB();
+            //MethodC();
+            WriteLine("Running methods asynchronously on multiple threads.");
+            Task taskA = new Task(MethodA);
+            taskA.Start();
+            Task taskB = Task.Factory.StartNew(MethodB);
+            Task taskC = Task.Run(new Action(MethodC));
+            Task[] tasks = { taskA, taskB, taskC }; // Add the newly created tasks to an array
+            Task.WaitAll(tasks); // Wait for all tasks to be completed before continuing
             WriteLine($"{timer.ElapsedMilliseconds:#,##0}ms elapsed.");
         }
     }
